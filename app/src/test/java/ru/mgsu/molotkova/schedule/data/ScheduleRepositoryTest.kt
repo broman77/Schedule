@@ -22,8 +22,10 @@ class ScheduleRepositoryTest {
     fun mondayPairFourChangesByParity() {
         val odd = ScheduleRepository.lessonsFor(LocalDate.of(2026, 9, 14))
         val even = ScheduleRepository.lessonsFor(LocalDate.of(2026, 9, 21))
-        assertTrue(odd.any { it.pair == 4 && it.group == "ИПГС 3-20" })
-        assertTrue(even.any { it.pair == 4 && it.group == "ИПГС 3-2" })
+
+        // По исходному Excel: жёлтый = нечётная, зелёный = чётная.
+        assertTrue(odd.any { it.pair == 4 && it.group == "ИПГС 3-2" })
+        assertTrue(even.any { it.pair == 4 && it.group == "ИПГС 3-20" })
     }
 
     @Test
