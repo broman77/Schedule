@@ -24,15 +24,21 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      # APK is the primary deliverable. Build and upload it before diagnostics
-      # so a future unit-test regression cannot hide an otherwise installable APK.
+      - name: Add official MGSU logo
+        shell: bash
+        run: |
+          mkdir -p app/src/main/res/drawable-nodpi
+          curl -L --fail --retry 2 \
+            "https://raw.githubusercontent.com/broman77/Mgsu_shedule/main/app/src/main/res/drawable-nodpi/official_mgsu_logo.png" \
+            -o app/src/main/res/drawable-nodpi/mgsu_logo.png || true
+
       - name: Build debug APK
         run: gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: MGSU-Schedule-Molotkova-PA-debug
+          name: MGSU-Schedule-Molotkova-PA-v0.2.0-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
